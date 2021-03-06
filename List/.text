@@ -1,0 +1,45 @@
+viod InitList(Sql &L,int maxsize);
+构造一个最大存储容量为maaxsize的空顺序表L
+
+void DestroyList(SqList &L);
+销毁顺序表L
+
+bool ListEmpty (Sqlist L);
+判断是否为空表
+
+int List Length(SqList L);
+返回顺序表中元素个数
+
+int PriorElem (SqList L,ElemType cur_e);
+若cur_e是顺序表中的元素，则返回前驱位序，否则返回-1
+
+int NextElem(SqList L,Elen=mType cur_e);
+若cur_e是顺序表中的元素，则返回后继位序，否则返回-1
+
+bool GetElem(SqList L,int pos ,ElemType &e);
+用e带回pos位的数，返回true，若超出表长，返回false
+
+int LocateElem(SqList L,ElemType e,bool (*compare)(ElemType,ElemType));
+返回表中第一个与e满足关系compare的数据元素的位序
+若不存在，返回0，compare()为数据元素的判定函数
+
+void ListTraverse(SqList L,void (visit)(ElemType));
+依次对顺序表L的每个元素调用函数visit()
+一旦visit()失败，则操作失败
+
+void ClearList(SqList L)
+将顺序表L重置为空表
+
+bool PutElem(SqList L,int pos,ElemType &e);
+若1<=pos<=LengthList(L),则对顺序表L中第pos个元素
+赋值同e的值且返回函数值为true，否则返回false
+
+bool ListInsert(SqList &L,int pos,Elemtype e);
+若储存空间未满且1《=pos<=LengthList(L)+1,则在顺序表L的
+第pos个元素之前插入新色元素e，L的长度增加1，且返回函数数值为true
+否则不改变顺序表且返回false
+
+bool ListDelete(SqList &L,int pos,ElemType &e);
+若1《=pos<=LengthList(L),则删除顺序表L的第pos个元素e
+L的长度增加1，且返回值为true，否则不改变顺序表且返回值false
+
