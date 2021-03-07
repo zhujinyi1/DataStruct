@@ -80,21 +80,31 @@ void Display(SqList L){
 
     //线性表插入
 bool ListInsert(SqList &L,int pos,ElemType e){
-    //若储存空间不满且1<=pos<=Listlength(L)+1,则在顺序表L
-
+    //若储存空间不满且1<=pos<=Listlength(L)+1,则在顺序表L的第pos
+    //个元素之前插入新的元素e且返回true，否则返回false
+    int j;
+    if(pos<1 || pos>L.length+1) return false;//插入位置不合法
+    if(L.length >=L.listsize) return false;//储存空间已满
+    for(j = L.length-1;j>pos-1;--j){
+        L.elem[j+1] = L.elem[j]; //元素后移
+        L.elem[pos-1] = e; //插入e
+        ++L.length; //表长+1
+        return true; 
+    }
 }
 
 //主函数
 int main(){
-    int maxsize,i,e,l;
+    int maxsize,i,e,l,pos;
     SqList list;
+    bool f;
 
     while(1){
         printf("1.初始化\n");
         printf("2.输入\n");
         printf("3.元素定位\n");
         printf("4.遍历\n");
-        printf("5.\n");
+        printf("5.插入\n");
         printf("6.\n");
         printf("7.\n");
         printf("8.\n");
@@ -128,6 +138,11 @@ int main(){
                 system("cls");
                 break;
             case 5:
+                cout << "输入插入位置";
+                cin >> pos;
+                cout << "插入的数";
+                cin >> e;
+                f = ListInsert(list,pos,e);
                 system("pause");
                 system("cls");
                 break;
