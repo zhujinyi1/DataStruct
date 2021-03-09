@@ -89,13 +89,93 @@ bool ListInsert(SqList &L,int pos,ElemType e){
         L.elem[j+1] = L.elem[j]; //元素后移
         L.elem[pos-1] = e; //插入e
         ++L.length; //表长+1
-        return true; 
     }
+    return true; 
+}
+
+    //删除元素
+bool ListDelete(SqList &L,int pos,ElemType &e){
+    //若1<=pos<=ListLength(L),则以e带回从顺序表L中删除
+    //的第pos个元素且返回TRUE，否则返回false
+    int j;
+    if((pos<1)||(pos>L.length))
+        return false; //删除位置不合法、
+    e = L.elem[pos-1];
+    for(j = pos;j<L.length;++j){
+        L.elem[j-1] = L.elem[j];  //被删除的元素左移
+    }
+    --L.length;
+    return true;
+}
+
+    //线性表销毁
+void DestroyList( SqList &L )
+{
+    // 释放顺序表 L 所占存储空间
+    delete[ ] L.elem;
+    L.listsize = 0;
+    L.length = 0;
+} 
+
+    //线性表比较
+int compare(SqList &A, SqList &B){
+    //若A<B，则返回-1；若A>B，则返回0；若A>B,则返回1
+    int j = 0;
+    while(j<A.length && B.length)
+        if(A.elem[j]<B.elem[j]) 
+            return -1;
+        else if(A.elem[j]>B.elem[j])
+            return 1;
+        else
+            j++;
+    if(A.length == B.length)
+        return 0;
+    else if(A.length <B.length)
+        return -1;
+    else
+        return 1;
+}
+
+    //顺序表逆置
+void invert(ElemType *R,int s,int t){
+    int k,w;
+    for(k=s;k<=(s+t)/2;k++){
+        w = *(R+k);
+        *(R+k) = *(R+t-k+s);
+        *(R+t-k+s) = w; 
+    }
+}
+
+void exchange(SqList &A,int m){
+    //前m元素和后n元素互换
+    int n;
+    if(m>0&&m<A.length){
+        n = A.length-m;
+        invert(A.elem,0,m+n-1);
+        invert(A.elem,0,n-1);
+        invert(A.elem,n,m+n-1);
+    }
+}
+    
+void purge_Sq(SqList &L){
+    //删除L中冗余的元素，即使操作之后的顺序表中只保留
+    //操作之前表中所有的值都不相同的元素
+    int j,k = -1,i;
+    for(i = 0;i<L.length;++i){
+        j = 0;
+        while(j<=k&&L.elem[j]!=L.elem[i]){
+            ++j;
+        }
+        if(k==-1||j>k){
+            L.elem[++k] = L.elem[i];
+        }
+    }
+    L.length = k+1;
 }
 
 //主函数
 int main(){
-    int maxsize,i,e,l,pos;
+    int maxsize,i,e,l,pos,s,t;
     SqList list;
     bool f;
 
@@ -105,10 +185,10 @@ int main(){
         printf("3.元素定位\n");
         printf("4.遍历\n");
         printf("5.插入\n");
-        printf("6.\n");
-        printf("7.\n");
-        printf("8.\n");
-        printf("9.\n");
+        printf("6.删除元素\n");
+        printf("7.销毁线性表\n");
+        printf("8.线性表比较\n");
+        printf("9.顺序表逆置\n");
         printf("10.\n");
         cin >> i;
         switch(i){
@@ -143,22 +223,42 @@ int main(){
                 cout << "插入的数";
                 cin >> e;
                 f = ListInsert(list,pos,e);
+                if(f){
+                    cout << "插入成功" << endl;
+                }else{
+                    cout << "插入失败" << endl;
+                }
                 system("pause");
                 system("cls");
                 break;
             case 6:
+                cout << "输入删除位置";
+                cin >> pos;
+                f = ListDelete(list,pos,e);
+                if(f){
+                    cout << "删除成功" << endl;
+                }else{
+                    cout << "删除失败" << endl;
+                }
                 system("pause");
                 system("cls");
                 break;
             case 7:
+                DestroyList( list );
                 system("pause");
                 system("cls");
                 break;
             case 8:
+                //int i = compare(list,list);//
                 system("pause");
                 system("cls");
                 break;
             case 9:
+                cout << "起点" ;
+                cin >> s;
+                cout << "终点";
+                cin >> t;
+                invert(list.elem,s,t);
                 system("pause");
                 system("cls");
                 break;
