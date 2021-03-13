@@ -45,7 +45,7 @@ void InPut(SqList &L){
         if(t != 1)
             break;
         cout << "请输入：";
-        cin >> a; 
+        cin >> a;
     }
 
 }
@@ -173,6 +173,20 @@ void purge_Sq(SqList &L){
     L.length = k+1;
 }
 
+void insert(SqList &L,ElemType e){
+    int i; 
+    for(i=L.length;i>0;i--){
+        if(L.elem[i-1]>=e){
+            break;
+        }
+        L.elem[i] = L.elem[i-1];
+    }
+    if(i<=0){
+        L.elem[0] = e;
+    }else{
+        L.elem[i-1] = e;
+    }
+}
 //主函数
 int main(){
     int maxsize,i,e,l,pos,s,t;
@@ -263,6 +277,9 @@ int main(){
                 system("cls");
                 break;
             case 10:
+                cout << "请输入插入的数:" <<endl;
+                cin >> e;
+                insert(list ,e);
                 system("pause");
                 system("cls");
                 break;
